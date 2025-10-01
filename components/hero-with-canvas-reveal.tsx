@@ -15,32 +15,31 @@ export default function HeroWithCanvasReveal() {
     if (showCards) {
       const chars = "01"
       const targetText = "FAST FINGERS CHALLENGE"
-      let currentText = ""
       let index = 0
 
       const interval = setInterval(() => {
         if (index < targetText.length) {
-          // Add random characters first, then replace with correct character
-          currentText =
-            targetText.substring(0, index) +
-            Array.from(
-              { length: Math.min(10, targetText.length - index) },
-              () => chars[Math.floor(Math.random() * chars.length)],
-            ).join("")
-
+          // Show random characters
+          const randomPart = Array.from(
+            { length: Math.min(10, targetText.length - index) },
+            () => chars[Math.floor(Math.random() * chars.length)],
+          ).join("")
+          
+          setMatrixText(targetText.substring(0, index) + randomPart)
+          
+          // After a brief moment, show the correct character
           setTimeout(() => {
-            currentText = targetText.substring(0, index + 1)
-            setMatrixText(currentText)
             index++
-          }, 50)
-
-          setMatrixText(currentText)
+            setMatrixText(targetText.substring(0, index))
+          }, 80)
         } else {
           clearInterval(interval)
         }
-      }, 100)
+      }, 150)
 
       return () => clearInterval(interval)
+    } else {
+      setMatrixText("")
     }
   }, [showCards])
 
@@ -59,8 +58,28 @@ export default function HeroWithCanvasReveal() {
   }
 
   const handleDownloadRulebook = () => {
-    // Add download functionality here
-    console.log("Download rulebook clicked")
+    // Check if file exists
+    fetch('/assets/Rule_book_include.pdf')
+      .then(response => {
+        if (response.ok) {
+          console.log('File exists, starting download...')
+          // Proceed with download
+          const link = document.createElement('a')
+          link.href = '/assets/Rule_book_include.pdf'
+          link.download = 'Rule_book_include.pdf'
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+        } else {
+          console.error('File not found. Status:', response.status)
+          console.log('Full URL:', window.location.origin + '/assets/Rule_book_include.pdf')
+          alert('Rule book file not found. Please contact the organizers.')
+        }
+      })
+      .catch(error => {
+        console.error('Error checking file:', error)
+        alert('Error downloading rule book. Please try again later.')
+      })
   }
 
   const handleRegister = () => {
@@ -69,9 +88,26 @@ export default function HeroWithCanvasReveal() {
 
   return (
     <div className="relative min-h-screen font-sans">
+      {/* Matrix Effect Background for entire website */}
+      <div className="fixed inset-0 -z-10">
+        <CanvasRevealEffect
+          animationSpeed={2}
+          containerClassName="bg-black"
+          colors={[
+            [0, 180, 0], // Brighter green
+            [0, 220, 0], // Even brighter green
+            [100, 255, 100], // Light green
+          ]}
+          dotSize={3}
+          opacities={[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]}
+        />
+        {/* Overlay gradient for better text visibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/80" />
+      </div>
+
       {/* Hero Section */}
       <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Canvas Reveal Effect Background */}
+        {/* Additional Canvas Reveal Effect for Hero Section */}
         <div className="absolute inset-0">
           <CanvasRevealEffect
             animationSpeed={2}
@@ -112,7 +148,7 @@ export default function HeroWithCanvasReveal() {
 
       {showCards && (
         <div className="relative">
-          <div className="absolute inset-0 bg-black">
+          <div className="absolute inset-0 bg-black/80">
             <GridBackground />
           </div>
           <div className="relative z-10">
@@ -120,7 +156,7 @@ export default function HeroWithCanvasReveal() {
               <div className="relative z-10 max-w-4xl mx-auto text-center">
                 <h2 className="text-4xl sm:text-5xl font-bold text-white mb-8 font-sans">#include yourselves</h2>
 
-                <div className="p-8 mb-8 border border-green-600/20">
+                <div className="p-8 mb-8 border border-green-600/20 backdrop-blur-sm bg-black/40 rounded-lg">
                   <h3 className="text-2xl font-bold text-green-400 mb-4 font-sans">About ACE</h3>
                   <p className="text-gray-200 text-lg leading-relaxed font-sans">
                     ACE (Association of Computer Engineering) is a dynamic association from the Computer Science
@@ -130,7 +166,7 @@ export default function HeroWithCanvasReveal() {
                   </p>
                 </div>
 
-                <div className="p-8 mb-10 border border-green-600/20">
+                <div className="p-8 mb-10 border border-green-600/20 backdrop-blur-sm bg-black/40 rounded-lg">
                   <p className="text-gray-200 text-lg leading-relaxed mb-6 font-sans">
                     #include is a tech-inspired event series designed to challenge creativity, logic, innovation, and
                     skills through engaging competitions — #include&lt;code&gt; for programming, #include&lt;web&gt; for
@@ -518,12 +554,96 @@ export default function HeroWithCanvasReveal() {
                 </div>
               </div>
             </div>
+
+            {/* Rules Section */}
+            <div id="rules-section" className="relative py-16 px-4 sm:px-6 lg:px-8">
+              <div className="max-w-4xl mx-auto">
+                <div className="transform transition-all duration-700 ease-out animate-in fade-in-0">
+                  <div className="relative rounded-2xl p-8 overflow-hidden backdrop-blur-sm border border-green-600/30 bg-black/40">
+                    <div className="absolute inset-0 opacity-20">
+                      <div
+                        className="w-full h-full"
+                        style={{
+                          backgroundImage: `
+                          radial-gradient(circle at 10% 20%, rgba(0, 255, 0, 0.08) 1px, transparent 1px),
+                          radial-gradient(circle at 30% 40%, rgba(0, 200, 0, 0.06) 1px, transparent 1px),
+                          radial-gradient(circle at 50% 60%, rgba(0, 150, 0, 0.05) 1px, transparent 1px),
+                          radial-gradient(circle at 70% 80%, rgba(0, 180, 0, 0.07) 1px, transparent 1px),
+                          radial-gradient(circle at 90% 10%, rgba(0, 220, 0, 0.09) 1px, transparent 1px)
+                        `,
+                          backgroundSize: "25px 25px, 30px 30px, 35px 35px, 28px 28px, 32px 32px",
+                        }}
+                      />
+                    </div>
+
+                    <div className="absolute inset-0 bg-gradient-to-br from-green-700/10 to-green-800/20 rounded-2xl"></div>
+
+                    <div className="relative z-10">
+                      <h2 className="text-3xl font-bold text-green-400 mb-6 text-center font-sans">Event Rules & Guidelines</h2>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-4">
+                          <div className="bg-black/30 rounded-lg p-4 border border-green-600/20">
+                            <h3 className="text-white font-bold mb-2 font-sans">📋 General Rules</h3>
+                            <ul className="text-gray-200 text-sm space-y-2 font-sans">
+                              <li>• All participants must register before the event</li>
+                              <li>• College ID card is mandatory for verification</li>
+                              <li>• Participants must arrive 15 minutes before the event</li>
+                              <li>• Use of unfair means will lead to disqualification</li>
+                              <li>• Internet usage will be restricted during competitions</li>
+                            </ul>
+                          </div>
+
+                          <div className="bg-black/30 rounded-lg p-4 border border-green-600/20">
+                            <h3 className="text-white font-bold mb-2 font-sans">🏆 Judging Criteria</h3>
+                            <ul className="text-gray-200 text-sm space-y-2 font-sans">
+                              <li>• Accuracy and efficiency of solutions</li>
+                              <li>• Creativity and innovation</li>
+                              <li>• Adherence to time limits</li>
+                              <li>• Code quality and best practices</li>
+                              <li>• Presentation and communication skills</li>
+                            </ul>
+                          </div>
+                        </div>
+
+                        <div className="space-y-4">
+                          <div className="bg-black/30 rounded-lg p-4 border border-green-600/20">
+                            <h3 className="text-white font-bold mb-2 font-sans">⚡ Important Notes</h3>
+                            <ul className="text-gray-200 text-sm space-y-2 font-sans">
+                              <li>• Participants must bring their own laptops</li>
+                              <li>• Necessary software should be pre-installed</li>
+                              <li>• Power backup will be provided</li>
+                              <li>• Wi-Fi will be available for specific events</li>
+                              <li>• Lunch will be provided for all participants</li>
+                            </ul>
+                          </div>
+
+                          <div className="bg-red-600/20 rounded-lg p-4 border border-red-500/30">
+                            <h3 className="text-white font-bold mb-2 font-sans">⚠️ Final Decision</h3>
+                            <p className="text-white text-sm font-bold font-sans">
+                              The decision of the judges and event organizers will be final and binding in all matters.
+                              No requests for re-evaluation will be entertained.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mt-6 text-center">
+                        <p className="text-green-400 text-sm font-semibold font-sans">
+                          For detailed rules of each event, please download the complete rule book.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Add Footer at the end of the content */}
-      <Footer />
+      {/* Conditionally render Footer only when showCards is true */}
+      {showCards && <Footer />}
     </div>
   )
 }

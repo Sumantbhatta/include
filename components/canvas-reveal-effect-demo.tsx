@@ -54,10 +54,9 @@ export default function CanvasRevealEffectDemo() {
               className="rounded shadow-lg border border-green-700"
             />
             <a 
-              href="/assets/Rule_book_include.pdf"
+              href="/Rule_book_include.pdf"
               download="Rule_book_include.pdf"
               className="z-30 px-6 py-3 bg-green-700 hover:bg-green-800 text-white rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-              rel="noopener noreferrer"
             >
               Download Rule Book
             </a>
@@ -146,15 +145,3 @@ export const Icon = ({ className, ...rest }: any) => {
     </svg>
   )
 }
-
-// Replace any standard img tags with Next.js Image component
-// For example, if you have something like:
-// <img src="/path/to/image.jpg" alt="Description" />
-// Replace with:
-// <Image 
-//   src="/path/to/image.jpg" 
-//   alt="Description" 
-//   width={500} 
-//   height={300} 
-//   priority={true} 
-// />
