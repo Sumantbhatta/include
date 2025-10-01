@@ -3,7 +3,7 @@ import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
-import { cn } from "@/lib/utils"; // <-- Add this line
+import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
   title: 'v0 App',
@@ -17,19 +17,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={cn(GeistSans.variable, GeistMono.variable)}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="Professional website with canvas reveal effects" />
-        <style>{`
-html {
-  font-family: ${GeistSans.style.fontFamily};
-  --font-sans: ${GeistSans.variable};
-  --font-mono: ${GeistMono.variable};
-}
-        `}</style>
       </head>
-      <body className={cn("min-h-screen font-sans antialiased", GeistSans.variable, GeistMono.variable)}>
+      <body className="min-h-screen font-sans antialiased">
         {children}
       </body>
     </html>

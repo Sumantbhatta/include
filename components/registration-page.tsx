@@ -65,10 +65,10 @@ export default function RegistrationPage() {
         <div className="max-w-2xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <Button
+          <Button
               onClick={() => router.back()}
               variant="outline"
-              className="mb-6 border-green-500/30 text-green-400 hover:bg-green-500/10"
+              className="mb-6 border-green-500/30 text-green-400 hover:bg-green-500/10 hover:text-green-400"
             >
               ← Back to Events
             </Button>
@@ -140,7 +140,7 @@ export default function RegistrationPage() {
                     <SelectTrigger className="bg-gray-800/80 border-green-500/30 text-white">
                       <SelectValue placeholder="Select an event" />
                     </SelectTrigger>
-                    <SelectContent className="bg-gray-800 border-green-500/30">
+                    <SelectContent className=" bg-green-900/90 border-green-500/30 text-white">
                       <SelectItem value="code">#include&lt;code&gt;</SelectItem>
                       <SelectItem value="web">#include&lt;web&gt;</SelectItem>
                       <SelectItem value="idea">#include&lt;idea&gt;</SelectItem>

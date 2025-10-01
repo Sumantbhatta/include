@@ -1,10 +1,62 @@
 "use client"
 import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect"
 import { Button } from "@/components/ui/button"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import GridBackground from "./grid-background"
 import Footer from "./footer" // Import the Footer component
+
+const MatrixBackground = () => {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationFrameId;
+
+    const resizeCanvas = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    };
+    
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const characters = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const fontSize = 16;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1).map(() => Math.floor(Math.random() * canvas.height));
+
+    const draw = () => {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#0F0';
+      ctx.font = `${fontSize}px monospace`;
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = characters.charAt(Math.floor(Math.random() * characters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+      animationFrameId = window.requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', resizeCanvas);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full z-0" />;
+};
 
 export default function HeroWithCanvasReveal() {
   const [showCards, setShowCards] = useState(false)
@@ -15,32 +67,31 @@ export default function HeroWithCanvasReveal() {
     if (showCards) {
       const chars = "01"
       const targetText = "FAST FINGERS CHALLENGE"
-      let currentText = ""
       let index = 0
 
       const interval = setInterval(() => {
         if (index < targetText.length) {
-          // Add random characters first, then replace with correct character
-          currentText =
-            targetText.substring(0, index) +
-            Array.from(
-              { length: Math.min(10, targetText.length - index) },
-              () => chars[Math.floor(Math.random() * chars.length)],
-            ).join("")
-
+          // Show random characters
+          const randomPart = Array.from(
+            { length: Math.min(10, targetText.length - index) },
+            () => chars[Math.floor(Math.random() * chars.length)],
+          ).join("")
+          
+          setMatrixText(targetText.substring(0, index) + randomPart)
+          
+          // After a brief moment, show the correct character
           setTimeout(() => {
-            currentText = targetText.substring(0, index + 1)
-            setMatrixText(currentText)
             index++
-          }, 50)
-
-          setMatrixText(currentText)
+            setMatrixText(targetText.substring(0, index))
+          }, 80)
         } else {
           clearInterval(interval)
         }
-      }, 100)
+      }, 150)
 
       return () => clearInterval(interval)
+    } else {
+      setMatrixText("")
     }
   }, [showCards])
 
@@ -59,8 +110,28 @@ export default function HeroWithCanvasReveal() {
   }
 
   const handleDownloadRulebook = () => {
-    // Add download functionality here
-    console.log("Download rulebook clicked")
+    // Check if file exists
+    fetch('/assets/Rule_book_include.pdf')
+      .then(response => {
+        if (response.ok) {
+          console.log('File exists, starting download...')
+          // Proceed with download
+          const link = document.createElement('a')
+          link.href = '/assets/Rule_book_include.pdf'
+          link.download = 'Rule_book_include.pdf'
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+        } else {
+          console.error('File not found. Status:', response.status)
+          console.log('Full URL:', window.location.origin + '/assets/Rule_book_include.pdf')
+          alert('Rule book file not found. Please contact the organizers.')
+        }
+      })
+      .catch(error => {
+        console.error('Error checking file:', error)
+        alert('Error downloading rule book. Please try again later.')
+      })
   }
 
   const handleRegister = () => {
@@ -522,8 +593,8 @@ export default function HeroWithCanvasReveal() {
         </div>
       )}
 
-      {/* Add Footer at the end of the content */}
-      <Footer />
+      {/* Conditionally render Footer only when showCards is true */}
+      {showCards && <Footer />}
     </div>
   )
 }

@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <main>
       <HeroWithCanvasReveal />
-      <Footer className="mt-0" />
+      {/* <Footer className="mt-0" /> */}
     </main>
   )
 }
