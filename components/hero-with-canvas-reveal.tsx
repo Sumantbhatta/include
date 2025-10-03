@@ -99,7 +99,7 @@ export default function HeroWithCanvasReveal() {
     router.push("/register")
   }
 
-  const totalPages = 3.8;
+  const totalPages = 3.3;
 
   return (
     <div className="w-full h-screen bg-black font-sans">
@@ -163,17 +163,17 @@ export default function HeroWithCanvasReveal() {
                     <img 
                         src={prizeImage1} 
                         alt="Prize 1" 
-                        className="w-28 sm:w-36 h-auto object-contain rounded-lg shadow-lg hover:scale-110 transition-transform duration-200 will-change-transform"
+                        className="w-24 sm:w-32 md:w-36 h-auto object-contain rounded-lg shadow-lg hover:scale-110 transition-transform duration-200 will-change-transform"
                         loading="lazy"
                     />
                 </a>
-                <div className="absolute top-[8rem] left-[8rem] sm:left-[14rem] w-[80px] sm:w-[100px] h-[80px] transform-gpu" style={{ color: 'rgb(0, 255, 0)' }}>
-                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full rotate-[-90deg] scale-x-[-1] animate-bounce">
-                        <path d="M10 90 C 30 50, 70 70, 90 10" stroke="currentColor" strokeWidth="2" fill="none" />
-                        <path d="M85 20 L90 10 L80 15" stroke="currentColor" strokeWidth="2" fill="none" />
+                {/* <div className="absolute left-[28%] sm:left-[17%] md:left-[14rem] top-[18%] sm:top-[17%] w-[60px] sm:w-[80px] md:w-[100px] h-[60px] sm:h-[80px] md:h-[100px] transform-gpu" style={{ color: 'rgb(0, 255, 0)' }}>
+                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full animate-bounce">
+                        <path d="M10 10 Q 50 50, 90 90" stroke="currentColor" strokeWidth="2" fill="none" />
+                        <path d="M85 80 L90 90 L80 85" stroke="currentColor" strokeWidth="2" fill="none" />
                     </svg>
-                </div>
-                <span className="absolute top-[12rem] left-[9rem] sm:left-[15rem] text-sm sm:text-lg text-green-400 font-bold font-sans tracking-wide">
+                </div> */}
+                <span className="absolute left-[6%] sm:left-[11%] top-[14%] sm:top-[13%] text-xs sm:text-sm md:text-lg text-green-400 font-bold font-sans tracking-wide">
                     Prizes
                 </span>
             </div>
@@ -190,17 +190,17 @@ export default function HeroWithCanvasReveal() {
                     <img 
                         src={prizeImage2} 
                         alt="Prize 2" 
-                        className="w-32 sm:w-40 h-auto object-contain rounded-lg shadow-lg hover:scale-110 transition-transform duration-200 will-change-transform"
+                        className="w-28 sm:w-36 md:w-40 h-auto object-contain rounded-lg shadow-lg hover:scale-110 transition-transform duration-200 will-change-transform"
                         loading="lazy"
                     />
                 </a>
-                <div className="absolute top-[16rem] right-[9rem] sm:right-[16rem] w-[80px] sm:w-[100px] h-[80px] transform-gpu" style={{ color: 'rgb(0, 255, 0)' }}>
-                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full rotate-[180deg] scale-y-[-1] animate-bounce">
-                        <path d="M90 90 C 70 50, 30 70, 10 10" stroke="currentColor" strokeWidth="2" fill="none" />
-                        <path d="M15 20 L10 10 L20 15" stroke="currentColor" strokeWidth="2" fill="none" />
+                {/* <div className="absolute right-[28%] sm:right-[20%] md:right-[16rem] top-[28%] w-[60px] sm:w-[80px] md:w-[100px] h-[60px] sm:h-[80px] md:h-[100px] transform-gpu" style={{ color: 'rgb(0, 255, 0)' }}>
+                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full animate-bounce">
+                        <path d="M90 10 Q 50 50, 10 90" stroke="currentColor" strokeWidth="2" fill="none" />
+                        <path d="M15 80 L10 90 L20 85" stroke="currentColor" strokeWidth="2" fill="none" />
                     </svg>
-                </div>
-                <span className="absolute top-[20rem] right-[10rem] sm:right-[17rem] text-sm sm:text-lg text-green-400 font-bold font-sans tracking-wide">
+                </div> */}
+                <span className="absolute right-[6%] sm:right-[11%] top-[24%] text-xs sm:text-sm md:text-lg text-green-400 font-bold font-sans tracking-wide">
                     Prizes
                 </span>
             </div>
