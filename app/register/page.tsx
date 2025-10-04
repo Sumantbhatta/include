@@ -1,9 +1,16 @@
-import RegistrationPage from "@/components/registration-page"
+"use client"
+
+import { Suspense } from 'react'
+import RegistrationPage from './registration-form'
 
 export default function Register() {
   return (
-    <main>
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen bg-black">
+        <div className="text-green-400 text-xl animate-pulse">Loading registration...</div>
+      </div>
+    }>
       <RegistrationPage />
-    </main>
+    </Suspense>
   )
 }
