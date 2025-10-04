@@ -5,19 +5,29 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import GridBackground from "./grid-background"
 
+
 export default function RegistrationPage() {
-  const router = useRouter()
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     eventName: "",
     mobileNumber: "",
-  })
+  });
+
+  // Pre-select event from query param
+  useEffect(() => {
+    const event = searchParams?.get("event");
+    if (event && ["code", "web", "idea", "type"].includes(event)) {
+      setFormData((prev) => ({ ...prev, eventName: event }));
+    }
+  }, [searchParams]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -44,14 +54,14 @@ export default function RegistrationPage() {
     const checkoutUrls: { [key: string]: string } = {
       'code': 'https://konfhub.com/checkout/include?ticketId=59724',
       'web': 'https://konfhub.com/checkout/include?ticketId=59725',
-      'idea': 'https://konfhub.com/checkout/include?ticketId=59724',
-      'type': 'https://konfhub.com/checkout/include?ticketId=59724',
-    }
-    return checkoutUrls[eventName] || ''
+      'idea': 'https://konfhub.com/checkout/include?ticketId=61430',
+      'type': 'https://konfhub.com/checkout/include?ticketId=61431',
+    };
+    return checkoutUrls[eventName] || '';
   }
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
+    setFormData((prev) => ({ ...prev, [field]: value }));
   }
 
   return (
@@ -136,7 +146,7 @@ export default function RegistrationPage() {
                   <Label htmlFor="eventName" className="text-green-400 font-semibold">
                     Event Name
                   </Label>
-                  <Select onValueChange={(value) => handleInputChange("eventName", value)}>
+                  <Select value={formData.eventName} onValueChange={(value) => handleInputChange("eventName", value)}>
                     <SelectTrigger className="bg-gray-800/80 border-green-500/30 text-white">
                       <SelectValue placeholder="Select an event" />
                     </SelectTrigger>
@@ -144,6 +154,7 @@ export default function RegistrationPage() {
                       <SelectItem value="code">#include&lt;code&gt;</SelectItem>
                       <SelectItem value="web">#include&lt;web&gt;</SelectItem>
                       <SelectItem value="idea">#include&lt;idea&gt;</SelectItem>
+                      <SelectItem value="type">#include&lt;type&gt;</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

@@ -1,8 +1,87 @@
 "use client"
 
 import type { HTMLAttributes } from "react"
+import { useState } from "react"
 
 interface FooterProps extends HTMLAttributes<HTMLDivElement> {}
+
+function ContactCard() {
+  const [showContact, setShowContact] = useState(false)
+
+  return (
+    <div className="relative">
+      {/* Contact Button */}
+      <button
+        onClick={() => setShowContact(!showContact)}
+        className="rounded-xl bg-gradient-to-r from-green-800 to-green-700 hover:from-green-700 hover:to-green-600 text-white font-semibold py-3 px-6 text-sm transition-all duration-300 ease-in-out transform hover:scale-105 border border-green-600/50 backdrop-blur-sm shadow-lg"
+      >
+        📞 Contact Us
+      </button>
+
+      {/* Contact Card */}
+      {showContact && (
+        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-4 w-80">
+          <div className="relative rounded-2xl bg-gradient-to-b from-[#171a17] to-[#0b0e0b] p-6 shadow-[0_8px_32px_rgba(0,0,0,0.8)] ring-1 ring-green-800/30 backdrop-blur-sm">
+            {/* Close button */}
+            <button
+              onClick={() => setShowContact(false)}
+              className="absolute top-2 right-2 text-green-400 hover:text-green-300 text-xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-green-800/20 transition-colors"
+            >
+              ×
+            </button>
+
+            {/* Contact Header */}
+            <div className="text-center mb-4">
+              <h3 className="text-green-400 font-bold text-lg mb-2">Get In Touch</h3>
+              <div className="w-16 h-0.5 bg-green-400 mx-auto"></div>
+            </div>
+
+            {/* Contact Info */}
+            <div className="space-y-4">
+              {/* Phone */}
+              <div className="flex items-center space-x-3 p-3 rounded-lg bg-black/30 border border-green-600/20">
+                <div className="text-green-400 text-lg">📱</div>
+                <div>
+                  <p className="text-gray-300 text-xs">Phone</p>
+                  <a 
+                    href="tel:+916364209277"
+                    className="text-white font-mono hover:text-green-400 transition-colors"
+                  >
+                    +91 6364209277
+                  </a>
+                </div>
+              </div>
+
+              {/* Email */}
+              <div className="flex items-center space-x-3 p-3 rounded-lg bg-black/30 border border-green-600/20">
+                <div className="text-green-400 text-lg">📧</div>
+                <div>
+                  <p className="text-gray-300 text-xs">Email</p>
+                  <a 
+                    href="mailto:sumantsbhatta@gmail.com"
+                    className="text-white font-mono hover:text-green-400 transition-colors break-all"
+                  >
+                    sumantsbhatta@gmail.com
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer note */}
+            <div className="mt-4 text-center">
+              <p className="text-gray-400 text-xs">Feel free to reach out for any queries about #include events!</p>
+            </div>
+          </div>
+
+          {/* Arrow pointing down to button */}
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1">
+            <div className="w-0 h-0 border-l-4 border-l-transparent border-r-4 border-r-transparent border-t-4 border-t-green-800/30"></div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
 
 export default function Footer(props: FooterProps) {
   return (
@@ -80,6 +159,11 @@ export default function Footer(props: FooterProps) {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Contact Section */}
+        <div className="mt-8 flex justify-center">
+          <ContactCard />
         </div>
 
         <div className="mt-8 flex items-center justify-between text-xs text-green-300/60">
