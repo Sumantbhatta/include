@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { Parallax, ParallaxLayer, IParallax } from "@react-spring/parallax"
 import GridBackground from "./grid-background"
-import Footer from "./footer"
+import Footer from "@/components/footer"
 
 export default function HeroWithCanvasReveal() {
   const [showCards, setShowCards] = useState(false)
@@ -99,7 +99,7 @@ export default function HeroWithCanvasReveal() {
     router.push("/register")
   }
 
-  const totalPages = 3.8;
+  const totalPages = 4.4;
 
   return (
     <div className="w-full h-screen bg-black font-sans">

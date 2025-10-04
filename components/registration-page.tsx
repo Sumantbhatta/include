@@ -22,12 +22,15 @@ export default function RegistrationPage() {
   });
 
   // Pre-select event from query param
-  useEffect(() => {
+useEffect(() => {
+  if (typeof window !== "undefined") {
     const event = searchParams?.get("event");
     if (event && ["code", "web", "idea", "type"].includes(event)) {
       setFormData((prev) => ({ ...prev, eventName: event }));
     }
-  }, [searchParams]);
+  }
+}, [searchParams]);
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
