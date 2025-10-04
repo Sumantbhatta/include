@@ -1,7 +1,7 @@
 "use client"
 
 import { Suspense } from 'react'
-import RegistrationPage from './registration-form'
+import RegistrationPage from 'include-master\components\registration-page.tsx'
 
 export default function Register() {
   return (
